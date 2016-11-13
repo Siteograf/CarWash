@@ -1,0 +1,49 @@
+// import all
+@import '{}/node_modules/bootstrap/scss/bootstrap.scss';
+// ========================================//
+
+body{
+  padding-top: 70px;
+}
+// ===LOADING=====================================//
+.loading-message {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: sans-serif;
+}
+
+.sk-spinner-rotating-plane.sk-spinner {
+  background-color: #fff;
+}
+
+// ==COLORPICKER======================================//
+
+.colorpicker {
+  z-index: 9999;
+}
+
+.colorpicker-2x .colorpicker-saturation {
+  width: 200px;
+  height: 200px;
+}
+
+.colorpicker-2x .colorpicker-hue,
+.colorpicker-2x .colorpicker-alpha {
+  width: 30px;
+  height: 200px;
+}
+
+.colorpicker-2x .colorpicker-color,
+.colorpicker-2x .colorpicker-color div {
+  height: 30px;
+}
+// ========================================//
+
+.colorPrew {
+  width: 10px;
+  height: 24px;
+  float: left;
+  margin-right: 10px;
+}
+// ========================================//

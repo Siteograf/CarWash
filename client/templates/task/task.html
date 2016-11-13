@@ -1,0 +1,129 @@
+<template name="taskList">
+
+    <h1>Tasks</h1>
+
+    {{>newTaskForm}}
+
+    <table class="table table-bordered">
+        {{#each tasks}}
+        {{> task}}
+        {{/each}}
+    </table>
+
+    {{> taskEditForm}}
+</template>
+
+<template name="task">
+    <tr class="{{#if checked}}checked{{/if}}">
+        <td>
+            <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
+        </td>
+
+        <td>{{taskName}}</td>
+        <td>
+            <div class="colorPrew" style="background-color:{{car.color.colorCode}}"></div>
+            {{car.make}} {{car.model}} {{car.plate}}
+        </td>
+
+        <td>
+            {{location.locationName}},
+            {{location.locationZip}},
+            {{location.locationAddress}}
+            {{location.locationComment}}
+        </td>
+
+        <td>
+            <a class="editTask" task-id="{{_id}}" href="#">Edit</a>
+            <a class="deleteTask" href="#">Delete</a>
+        </td>
+    </tr>
+</template>
+
+<template name="newTaskForm">
+    <form class="new-task form-inline">
+        <div class="form-group">
+            <input class="form-control" type="text" name="taskName" width="100%" placeholder="Task Name">
+            {{> carSelect}}
+            {{> locationSelect}}
+            <input class="btn btn-primary" type="submit" value="Submit"/>
+        </div>
+    </form>
+    <hr>
+</template>
+
+<template name="carSelect">
+    <select name="carId" id="carId" class="custom-select form-control">
+        {{#each cars}}
+        <option value="{{_id}}">{{make}} {{model}} {{plate}}</option>
+        {{/each}}
+    </select>
+</template>
+
+<template name="locationSelect">
+    <select name="locationId" id="locationId" class="custom-select form-control">
+        {{#each locations}}
+        <option value="{{_id}}">{{locationName}} {{locationZip}} {{locationAddress}}</option>
+        {{/each}}
+    </select>
+</template>
+
+<template name="taskEditForm">
+    <div class="modal fade" id="editTask">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Task {{task._id}}</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form class="edit-car">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="taskName">Task Name</label>
+                                    <input class="form-control" id="taskName" name="taskName"
+                                           type="text" value="{{task.taskName}}" placeholder="Task Name"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="carId">Car {{car}}</label>
+                                    {{> carSelect}}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="locationId">Location</label>
+                                    {{> locationSelect}}
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="btn btn-primary submit"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group col-md-16">
+                                    <a class="btn btn-danger delete" href="#">Delete Task</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</template>

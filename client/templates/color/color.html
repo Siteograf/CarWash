@@ -1,0 +1,82 @@
+<template name="colorList">
+    <h1>Colors</h1>
+
+    {{> newColorForm}}
+
+    <table class="table table-bordered">
+        {{#each colors}}
+        {{> color}}
+        {{/each}}
+    </table>
+
+    {{> colorEditForm}}
+</template>
+
+<template name="color">
+    <tr class="">
+        <td>
+            <div class="colorPrew" style="background-color:{{colorCode}}"></div>
+            {{colorName}}
+        </td>
+        <td><span style="color:{{colorCode}}">{{colorCode}}</span></td>
+        <td>
+            <a class="editColor" color-id="{{_id}}" color-code="{{colorCode}}" href="#">Edit</a>
+            <a class="deleteColor" href="#">Delete</a>
+        </td>
+
+    </tr>
+</template>
+
+<template name="colorPage">
+    {{_id}}
+    <h1>{{colorName}} {{colorCode}}</h1>
+</template>
+
+<template name="newColorForm">
+    <form class="new-color form-inline">
+        <div class="form-group">
+            <input class="form-control" type="text" name="colorName" placeholder="ColorName">
+            <input class="form-control colorCode" type="text" name="colorCode" placeholder="ColorCode">
+            <input class="btn btn-primary" type="submit" value="Submit"/>
+        </div>
+    </form>
+    <hr>
+</template>
+
+<template name="colorEditForm">
+    <div class="modal fade" id="editColor">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Color {{color._id}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="main">
+                        <div class="form-group">
+                            <label for="colorName">ColorName</label>
+                            <input class="form-control" id="colorName" name="colorName" type="text" value="{{color.colorName}}" placeholder="ColorName"/>
+                        </div>
+
+                        <div id="colorPicker" class="form-group input-group colorpicker-component">
+                            <input type="text" value="{{color.colorCode}}" id="colorCode" color-code="{{color.colorCode}}" class="form-control" placeholder="ColorCode"/>
+                            <span class="input-group-addon"><i></i></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-primary submit"/>
+                        </div>
+                        <hr/>
+
+                        <div class="form-group">
+                            <a class="btn btn-danger delete" href="#">Delete post</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
