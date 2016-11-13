@@ -1,3 +1,5 @@
+Meteor.subscribe('locations');
+
 Template.locationList.helpers({
     locations() {
         return Locations.find({}, {sort: {createdAt: -1}});

@@ -1,3 +1,5 @@
+Meteor.subscribe('colors');
+
 Template.colorList.helpers({
     colors() {
         return Colors.find({}, {sort: {createdAt: -1}});

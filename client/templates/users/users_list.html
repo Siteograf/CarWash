@@ -1,0 +1,26 @@
+<template name="usersList">
+    <div class="users page">
+        <div class="wrapper">
+            {{#each users}}
+                <div class="user">
+                    <div class="user-content">
+                        <!--<h3><a href="clients/{{_id._str}}">{{name}}</a></h3>-->
+                        <!--<h3><a href="{{pathFor 'clientPage' _id=this._id.toHexString}}">{{name}}</a></h3>-->
+                        <h3><a href="{{pathFor 'userShow'}}">{{username}}</a></h3>
+                        <!--{{#if isUserInRole _id 'student'}}<p>Student</p>{{/if}}-->
+                        {{#if status }}
+                            <p>
+                                {{#if status.online }}
+                                    Online
+                                {{else}}
+                                    Offline
+                                {{/if}}
+                            </p>
+                        {{/if}}
+                        <a href="">Edit</a>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</template>

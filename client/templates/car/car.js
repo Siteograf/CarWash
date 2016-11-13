@@ -1,3 +1,5 @@
+Meteor.subscribe('cars');
+
 Template.carList.helpers({
     cars() {
         return Cars.find({}, {sort: {createdAt: -1}});

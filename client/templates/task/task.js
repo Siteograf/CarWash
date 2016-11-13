@@ -1,3 +1,5 @@
+Meteor.subscribe('tasks');
+
 Template.taskList.helpers({
     tasks() {
         return Tasks.find({});
