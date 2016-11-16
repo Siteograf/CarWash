@@ -1,5 +1,4 @@
 <template name="taskList">
-
     <h1>Tasks</h1>
 
     {{>newTaskForm}}
@@ -10,7 +9,8 @@
         {{/each}}
     </table>
 
-    {{> taskEditForm}}
+    {{>taskEditForm}}
+
 </template>
 
 <template name="task">
@@ -52,6 +52,8 @@
 </template>
 
 <template name="carSelect">
+
+    <span class="currentCar">{{ currentCar }}</span>
     <select name="carId" id="carId" class="custom-select form-control">
         {{#each cars}}
         <option value="{{_id}}">{{make}} {{model}} {{plate}}</option>
@@ -94,7 +96,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="carId">Car {{car}}</label>
+                                    <label for="carId">Car  {{car._id}}</label>
                                     {{> carSelect}}
                                 </div>
                             </div>

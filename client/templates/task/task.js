@@ -28,6 +28,16 @@ Template.carSelect.helpers({
     cars() {
         return Cars.find({});
     },
+
+    currentCar: function () {
+        let taskId = Session.get('selectedTaskId');
+        if (typeof taskId !== "undefined") {
+            let task = Tasks.findOne(taskId);
+            let carId = task.carId;
+            let currentCar = Cars.findOne(carId);
+            return currentCar._id;
+        }
+    }
 });
 
 Template.locationSelect.helpers({
@@ -42,21 +52,24 @@ Template.taskList.events({
 
         let target = event.target;
 
-            Tasks.insert({
-                taskName: target.taskName.value,
-                carId: target.carId.value,
-                locationId: target.locationId.value,
-                createdAt: new Date(),
-            });
+        Tasks.insert({
+            taskName: target.taskName.value,
+            carId: target.carId.value,
+            locationId: target.locationId.value,
+            createdAt: new Date(),
+        });
 
         target.taskName.value = '';
     },
     'click .editTask'(event){
         event.preventDefault();
-        taskId = event.target.getAttribute('task-id');
+        let taskId = event.target.getAttribute('task-id');
 
         Session.set('selectedTaskId', taskId);
         $('#editTask').modal('show');
+
+        let currentCarId = document.querySelector('#editTask span.currentCar').innerHTML;
+        console.log(currentCarId);
     },
     'click .deleteTask': function (event) {
         event.preventDefault();
@@ -76,16 +89,7 @@ Template.taskEditForm.helpers({
             return task;
         }
     },
-    car: function () {
-        let taskId = Session.get('selectedTaskId');
-        let carId = task.carId;
 
-        if (typeof taskId !== "undefined") {
-            let car = Car.findOne(carId);
-            console.log(car);
-            return car;
-        }
-    }
 });
 
 
