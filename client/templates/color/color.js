@@ -16,45 +16,47 @@ Template.colorList.helpers({
 });
 
 Template.colorList.events({
-    'submit .new-color'(event){
-        event.preventDefault();
-
-        let target = event.target;
-
-        Colors.insert({
-            colorName: target.colorName.value,
-            colorCode: target.colorCode.value,
-            createdAt: new Date(),
-        });
-
-        target.colorName.value = '';
-        target.colorCode.value = '';
-    },
+    // 'submit .new-color'(event){
+    //     event.preventDefault();
+    //
+    //     let target = event.target;
+    //
+    //     Colors.insert({
+    //         colorName: target.colorName.value,
+    //         colorCode: target.colorCode.value,
+    //         createdAt: new Date(),
+    //     });
+    //
+    //     target.colorName.value = '';
+    //     target.colorCode.value = '';
+    // },
     'click .editColor'(event){
         event.preventDefault();
 
         colorId = event.target.getAttribute('color-id');
         Session.set('selectedColorId', colorId);
+
         $('#editColor').modal('show');
 
         let colorCode = event.target.getAttribute('color-code');
-        $('#colorPicker').colorpicker('destroy');
-        $('#colorPicker').colorpicker({
-            color: colorCode,
-            customClass: 'colorpicker-2x',
-            sliders: {
-                saturation: {
-                    maxLeft: 200,
-                    maxTop: 200
-                },
-                hue: {
-                    maxTop: 200
-                },
-                alpha: {
-                    maxTop: 200
-                }
-            }
-        });
+
+        // $('#colorPicker').colorpicker('destroy');
+        // $('#colorPicker').colorpicker({
+        //     color: colorCode,
+        //     customClass: 'colorpicker-2x',
+        //     sliders: {
+        //         saturation: {
+        //             maxLeft: 200,
+        //             maxTop: 200
+        //         },
+        //         hue: {
+        //             maxTop: 200
+        //         },
+        //         alpha: {
+        //             maxTop: 200
+        //         }
+        //     }
+        // });
     },
     'click .deleteColor': function (event) {
         event.preventDefault();
@@ -91,21 +93,21 @@ Template.colorEditForm.events({
     'click .submit': function (e) {
         e.preventDefault();
 
-        let currentColorId = Session.get('selectedColorId');
-
-        let colorProperties = {
-            colorName: document.getElementById('colorName').value,
-            colorCode: document.getElementById('colorCode').value,
-        };
-
-        Colors.update(currentColorId, {$set: colorProperties}, function (error) {
-            if (error) {
-                // display the error to the user
-                alert(error.reason);
-            } else {
-                Router.go('colorList', {_id: currentColorId});
-            }
-        });
+        // let currentColorId = Session.get('selectedColorId');
+        //
+        // let colorProperties = {
+        //     colorName: document.getElementById('colorName').value,
+        //     colorCode: document.getElementById('colorCode').value,
+        // };
+        //
+        // Colors.update(currentColorId, {$set: colorProperties}, function (error) {
+        //     if (error) {
+        //         // display the error to the user
+        //         alert(error.reason);
+        //     } else {
+        //         Router.go('colorList', {_id: currentColorId});
+        //     }
+        // });
 
         $('#editColor').modal('hide');
     },
@@ -122,14 +124,15 @@ Template.colorEditForm.events({
 });
 
 Template.colorEditForm.helpers({
-    color: function () {
-        var colorId = Session.get('selectedColorId');
+    currentColor: function () {
+        let colorId = Session.get('selectedColorId');
 
         if (typeof colorId !== "undefined") {
-            var color = Colors.findOne(colorId);
+            let color = Colors.findOne(colorId);
             return color;
         }
-    }
+    },
+
 });
 
 Template.newColorForm.onRendered(function () {

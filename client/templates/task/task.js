@@ -15,6 +15,16 @@ Template.taskList.helpers({
      },*/
 });
 
+Template.editPost.helpers({
+    doc() {
+        var item = Posts.findOne("QFmnwohrPkWFXw2hg");
+        console.log(item);
+        let po = 'QFmnwohrPkWFXw2hg';
+        return Posts.findOne("QFmnwohrPkWFXw2hg");
+    }
+});
+
+
 Template.task.helpers({
     car() {
         return Cars.findOne(this.carId)

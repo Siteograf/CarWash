@@ -5,7 +5,7 @@
 
     <table class="table table-bordered">
         {{#each colors}}
-        {{> color}}
+            {{> color}}
         {{/each}}
     </table>
 
@@ -33,17 +33,20 @@
 </template>
 
 <template name="newColorForm">
-    <form class="new-color form-inline">
+    {{#autoForm collection="Colors" id="insertPostForm" type="insert" class="form-inline"}}
         <div class="form-group">
-            <input class="form-control" type="text" name="colorName" placeholder="ColorName">
-            <input class="form-control colorCode" type="text" name="colorCode" placeholder="ColorCode">
-            <input class="btn btn-primary" type="submit" value="Submit"/>
+            {{> afFieldInput name='colorName' placeholder="ColorName"}}
         </div>
-    </form>
+        <div class="form-group">
+            {{> afFieldInput name="colorCode" type="color" maxlength="40" class="colorField"}}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    {{/autoForm}}
     <hr>
 </template>
 
-<template name="colorEditForm">
+<template name="colorEditForm">,
     <div class="modal fade" id="editColor">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -54,26 +57,39 @@
                     <h4 class="modal-title">Color {{color._id}}</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="main">
+
+                    {{#autoForm collection="Colors" id="updatePostForm" doc=currentColor type="update" class="form-inline"}}
                         <div class="form-group">
-                            <label for="colorName">ColorName</label>
-                            <input class="form-control" id="colorName" name="colorName" type="text" value="{{color.colorName}}" placeholder="ColorName"/>
+                            {{> afFieldInput name='colorName' placeholder="ColorName"}}
+                        </div>
+                        <div class="form-group">
+                            {{> afFieldInput name="colorCode" type="color" maxlength="40" class="colorField"}}
                         </div>
 
-                        <div id="colorPicker" class="form-group input-group colorpicker-component">
-                            <input type="text" value="{{color.colorCode}}" id="colorCode" color-code="{{color.colorCode}}" class="form-control" placeholder="ColorCode"/>
-                            <span class="input-group-addon"><i></i></span>
-                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    {{/autoForm}}
 
-                        <div class="form-group">
-                            <input type="submit" value="Submit" class="btn btn-primary submit"/>
-                        </div>
-                        <hr/>
+                    <!--<form class="main">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="colorName">ColorName</label>-->
+                    <!--<input class="form-control" id="colorName" name="colorName" type="text" value="{{color.colorName}}" placeholder="ColorName"/>-->
+                    <!--</div>-->
 
-                        <div class="form-group">
-                            <a class="btn btn-danger delete" href="#">Delete post</a>
-                        </div>
-                    </form>
+                    <!--<div id="colorPicker" class="form-group input-group colorpicker-component">-->
+                    <!--<input type="text" value="{{color.colorCode}}" id="colorCode" color-code="{{color.colorCode}}" class="form-control" placeholder="ColorCode"/>-->
+                    <!--<span class="input-group-addon"><i></i></span>-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group">-->
+                    <!--<input type="submit" value="Submit" class="btn btn-primary submit"/>-->
+                    <!--</div>-->
+                    <!--<hr/>-->
+
+                    <!--<div class="form-group">-->
+                    <!--<a class="btn btn-danger delete" href="#">Delete post</a>-->
+                    <!--</div>-->
+                    <!--</form>-->
+
                 </div>
 
             </div>

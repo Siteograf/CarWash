@@ -11,7 +11,31 @@
 
     {{>taskEditForm}}
 
+    {{> editPost}}
+
+    {{#autoForm collection="Posts" id="insertPostForm" type="insert"}}
+    <fieldset>
+        {{> afQuickField name='title'}}
+        {{> afQuickField name='content' rows=6}}
+        {{> afQuickField name='birthday'}}
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Create</button>
+    {{/autoForm}}
+
+
 </template>
+
+<template name="editPost">
+    <h1>Edit</h1>
+    {{#autoForm collection="Posts" id="updatePostForm" type="update" doc=doc._id}}
+    <fieldset>
+        {{> afQuickField name='title'}}
+        {{> afQuickField name='content' rows=6}}
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Insert</button>
+    {{/autoForm}}
+</template>
+
 
 <template name="task">
     <tr class="{{#if checked}}checked{{/if}}">
@@ -96,7 +120,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="carId">Car  {{car._id}}</label>
+                                    <label for="carId">Car {{car._id}}</label>
                                     {{> carSelect}}
                                 </div>
                             </div>
