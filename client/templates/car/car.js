@@ -16,22 +16,6 @@ Template.carList.helpers({
 });
 
 Template.carList.events({
-    // 'submit .new-car'(event){
-    //     event.preventDefault();
-    //     let target = event.target;
-    //     Cars.insert({
-    //         make: target.make.value,
-    //         model: target.model.value,
-    //         plate: target.plate.value,
-    //         color: target.idColor.value,
-    //         createdAt: new Date(),
-    //     });
-    //     console.log(target.idColor.value);
-    //     target.make.value = '';
-    //     target.model.value = '';
-    //     target.plate.value = '';
-    //     target.idColor.value = '';
-    // },
     'click .editCar'(event){
         event.preventDefault();
         carId = event.target.getAttribute('car-id');
@@ -39,13 +23,12 @@ Template.carList.events({
         // ModalHelper.openModalFor(animalId);
         Session.set('selectedCarId', carId);
         // Modal.show('animalsModal');
-        $('#editCar').modal('show');
+        $('#updateCarFormWrapper').modal('show');
     },
     'change .hide-completed input'(event, instance) {
         instance.state.set('hideCompleted', event.target.checked)
     }
 });
-
 
 
 AutoForm.hooks({
@@ -74,33 +57,10 @@ AutoForm.hooks({
     }
 });
 
-Template.carEditForm.events({
+Template.updateCarFormWrapper.events({
     // Modal
     'click .submit': function (e) {
-        // e.preventDefault();
-        // let currentCarId = Session.get('selectedCarId');
-        // let colorIdSelect = document.querySelector('#editCar .idColor').value;
-        // let colorObject = Colors.findOne(colorIdSelect);
-        // let carProperties = {
-        //     make: document.getElementById('make').value,
-        //     model: document.getElementById('model').value,
-        //     plate: document.getElementById('plate').value,
-        //     color: {
-        //         colorId: colorIdSelect,
-        //         colorName: colorObject.colorName,
-        //         colorCode: colorObject.colorCode,
-        //     },
-        // };
-        // Cars.update(currentCarId, {$set: carProperties}, function (error) {
-        //     if (error) {
-        //         // display the error to the user
-        //         alert(error.reason);
-        //     } else {
-        //         Router.go('carList', {_id: currentCarId});
-        //     }
-        // });
-
-        $('#editCar').modal('hide');
+        $('#updateCarFormWrapper').modal('hide');
     },
 
     'click .delete': function (e) {
@@ -125,9 +85,3 @@ Template.updateCarForm.helpers({
         }
     }
 });
-
-// Template.colorSelect.helpers({
-//     colors() {
-//         return Colors.find({});
-//     },
-// });
