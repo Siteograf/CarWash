@@ -1,21 +1,57 @@
 <template name="carList">
     <h1>Cars</h1>
 
-    {{> newCarForm}}
+    {{> insertCarForm}}
+
+    <hr >
+
 
     <table class="table table-bordered">
         {{#each cars}}
-        {{> car}}
+            {{> car}}
         {{/each}}
     </table>
 
     {{> carEditForm}}
 </template>
 
+<template name="insertCarForm">
+    {{> quickForm
+    collection="Cars"
+    id="insertCarForm"
+    type="insert"
+    template="bootstrap3-horizontal"
+    class="form-inline"
+    }}
+</template>
+
+
+<template name="updateCarForm">
+    {{> quickForm collection="Cars"
+    id="updateCarForm"
+    doc=currentCar
+    type="update"
+    }}
+</template>
+
+<template name="afPanel">
+    <div class="panel panel-default">
+        {{#with afFieldLabelText name=this.name}}
+            <div class="panel-heading">
+                <h1 class="panel-title">{{this}}</h1>
+            </div>
+        {{/with}}
+        <div class="panel-body">
+            {{> Template.contentBlock}}
+        </div>
+    </div>
+</template>
+
 <template name="car">
     <tr class="{{#if checked}}checked{{/if}}">
         <td><input type="checkbox" checked="{{checked}}" class="toggle-checked"/></td>
-        <td><div class="colorPrew" style="background-color:{{color.colorCode}}"></div>
+        <td>
+            <div class="colorPrew" style="background-color:{{color.colorCode}}"></div>
             {{make}} {{model}}</td>
         <td>{{plate}}</td>
         <td></td>
@@ -52,7 +88,7 @@
 <template name="colorSelect">
     <select name="idColor" id="idColor" class="form-control custom-select idColor">
         {{#each colors}}
-        <option value="{{_id}}">{{colorName}}</option>
+            <option value="{{_id}}">{{colorName}}</option>
         {{/each}}
     </select>
 </template>
@@ -69,51 +105,54 @@
                 </div>
                 <div class="modal-body">
 
-                    <form class="edit-car">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="make">Make</label>
-                                    <input class="form-control" id="make" name="make" type="text" value="{{car.make}}" placeholder="Make"/>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="model">Model</label>
-                                    <input class="form-control" id="model" name="title" type="text" value="{{car.model}}" placeholder="Model"/>
-                                </div>
-                            </div>
-                        </div>
+                    {{>updateCarForm}}
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="model">Plate</label>
-                                    <input class="form-control" id="plate" name="title" type="text" value="{{car.plate}}" placeholder="Plate"/>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="idColor">Color</label>
-                                    {{> colorSelect}}
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="submit" value="Submit" class="btn btn-primary submit"/>
-                                </div>
-                            </div>
+                    <!--<form class="edit-car">-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="make">Make</label>-->
+                    <!--<input class="form-control" id="make" name="make" type="text" value="{{car.make}}" placeholder="Make"/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="model">Model</label>-->
+                    <!--<input class="form-control" id="model" name="title" type="text" value="{{car.model}}" placeholder="Model"/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
 
-                            <div class="col-md-6">
-                                <div class="form-group col-md-16">
-                                    <a class="btn btn-danger delete" href="#">Delete Car</a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="model">Plate</label>-->
+                    <!--<input class="form-control" id="plate" name="title" type="text" value="{{car.plate}}" placeholder="Plate"/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="idColor">Color</label>-->
+                    <!--{{> colorSelect}}-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<hr>-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<input type="submit" value="Submit" class="btn btn-primary submit"/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group col-md-16">-->
+                    <!--<a class="btn btn-danger delete" href="#">Delete Car</a>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</form>-->
+
                 </div>
 
             </div><!-- /.modal-content -->

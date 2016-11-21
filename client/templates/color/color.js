@@ -69,26 +69,26 @@ Template.colorList.events({
 });
 
 Template.colorEditForm.events({
-    'submit form': function (event) {
-        event.preventDefault();
-        let target = event.target;
-
-        let currentColorId = this._id;
-
-        let colorProperties = {
-            colorName: target.colorName.value,
-            colorCode: target.colorCode.value,
-        };
-
-        Colors.update(currentColorId, {$set: colorProperties}, function (error) {
-            if (error) {
-                // display the error to the user
-                alert(error.reason);
-            } else {
-                Router.go('colors', {_id: currentColorId});
-            }
-        });
-    },
+    // 'submit form': function (event) {
+    //     event.preventDefault();
+    //     let target = event.target;
+    //
+    //     let currentColorId = this._id;
+    //
+    //     let colorProperties = {
+    //         colorName: target.colorName.value,
+    //         colorCode: target.colorCode.value,
+    //     };
+    //
+    //     Colors.update(currentColorId, {$set: colorProperties}, function (error) {
+    //         if (error) {
+    //             // display the error to the user
+    //             alert(error.reason);
+    //         } else {
+    //             Router.go('colors', {_id: currentColorId});
+    //         }
+    //     });
+    // },
 
     'click .submit': function (e) {
         e.preventDefault();

@@ -2,9 +2,10 @@
 @import '{}/node_modules/bootstrap/scss/bootstrap.scss';
 // ========================================//
 
-body{
+body {
   padding-top: 70px;
 }
+
 // ===LOADING=====================================//
 .loading-message {
   color: #fff;
@@ -38,6 +39,7 @@ body{
 .colorpicker-2x .colorpicker-color div {
   height: 30px;
 }
+
 // ========================================//
 
 .colorPrew {
@@ -46,6 +48,7 @@ body{
   float: left;
   margin-right: 10px;
 }
+
 // ===COLOR FIELD=====================================//
 
 .colorField {
@@ -54,5 +57,23 @@ body{
   min-width: 100px !important;
   padding: 0;
 }
+
 // ========================================//
+
+.hidden {
+  display: none !important;
+}
+
+#insertCarForm {
+  .control-label {
+    display: none;
+  }
+}
+
+#updateCarForm {
+  .panel-title {
+    display: none;
+  }
+}
+
 // ========================================//
