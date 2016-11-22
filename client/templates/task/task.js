@@ -16,6 +16,8 @@ Template.taskList.helpers({
 });
 
 
+
+
 Template.task.helpers({
     car() {
         return Cars.findOne(this.carId)
@@ -24,6 +26,19 @@ Template.task.helpers({
         return Locations.findOne(this.locationId)
     },
 });
+
+
+Template.insertTaskForm.rendered = function(){
+    $(".select2").select2({
+        // theme: "classic"
+    });
+};
+
+Template.updateTaskForm.rendered = function(){
+    $(".select2").select2({
+        // theme: "classic"
+    });
+};
 
 Template.taskList.events({
     'click .editTask'(event){
@@ -43,7 +58,7 @@ Template.taskList.events({
 });
 
 Template.updateTaskForm.helpers({
-    task: function () {
+    currentTask: function () {
         let taskId = Session.get('selectedTaskId');
 
         if (typeof taskId !== "undefined") {

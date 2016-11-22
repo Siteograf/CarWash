@@ -23,15 +23,53 @@
     template="bootstrap3-horizontal"
     class="form-inline"
     }}
+
+
+    <hr>
+    {{#autoForm collection="Tasks" id="insertTaskForm" type="insert" class="row"}}
+        <div class="col-md-2">
+            {{> afFieldInput name='taskName'}}
+        </div>
+        <div class="col-md-3">
+            {{> afFieldInput name='carId'}}
+        </div>
+        <div class="col-md-3">
+            {{> afFieldInput name='locationId'}}
+        </div>
+        <div class="col-md-2">
+            {{> afFieldInput name='startDate'}}
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary">Insert</button>
+        </div>
+    {{/autoForm}}
 </template>
 
 
 <template name="updateTaskForm">
     {{> quickForm collection="Tasks"
     id="updateTaskForm"
-    doc=currentCar
+    doc=currentTask
     type="update"
     }}
+
+    {{#autoForm collection="Tasks" id="insertTaskForm" type="insert" class="row"}}
+        <div class="col-md-2">
+            {{> afFieldInput name='taskName'}}
+        </div>
+        <div class="col-md-3">
+            {{> afFieldInput name='carId'}}
+        </div>
+        <div class="col-md-3">
+            {{> afFieldInput name='locationId'}}
+        </div>
+        <div class="col-md-2">
+            {{> afFieldInput name='startDate'}}
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary">Insert</button>
+        </div>
+    {{/autoForm}}
 </template>
 
 <template name="task">
@@ -40,6 +78,7 @@
             <input type="checkbox" checked="{{checked}}" class="toggle-checked"/>
         </td>
 
+        <td>{{formatDate startDate}}</td>
         <td>{{taskName}}</td>
         <td>
             <div class="colorPrew" style="background-color:{{car.color.colorCode}}"></div>
@@ -51,6 +90,10 @@
             {{location.locationZip}},
             {{location.locationAddress}}
             {{location.locationComment}}
+        </td>
+
+        <td>
+            <span class="btn btn-outline-primary">Time</span>
         </td>
 
         <td>
