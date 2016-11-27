@@ -1,8 +1,9 @@
 Meteor.subscribe('tasks');
 
+// ==== taskList =============================================================================
 Template.taskList.helpers({
     tasks() {
-        return Tasks.find({}, {sort: {createdAt: -1}});
+        return Tasks.find({}, {sort: {/*createdAt: -1*/}});
     },
 
     // tasks() {
@@ -15,64 +16,82 @@ Template.taskList.helpers({
     // },
 });
 
-
-
-
-Template.task.helpers({
-    car() {
-        return Cars.findOne(this.carId)
-    },
-    location() {
-        return Locations.findOne(this.locationId)
-    },
-});
-
-
-Template.insertTaskForm.rendered = function(){
-    $(".select2").select2({
-        // theme: "classic"
-    });
-};
-
-Template.updateTaskForm.rendered = function(){
-    $(".select2").select2({
-        // theme: "classic"
-    });
-};
-
-Template.taskList.events({
+Template.task.events({
     'click .editTask'(event){
         event.preventDefault();
         let taskId = event.target.getAttribute('task-id');
 
         Session.set('selectedTaskId', taskId);
+
         $('#updateTaskFormWrapper').modal('show');
     },
     'click .deleteTask': function (event) {
         event.preventDefault();
         Tasks.remove(this._id);
     },
-    'change .hide-completed input'(event, instance) {
-        instance.state.set('hideCompleted', event.target.checked)
-    }
-});
 
-Template.updateTaskForm.helpers({
-    currentTask: function () {
-        let taskId = Session.get('selectedTaskId');
+    'click .setTime'(event){
+        event.preventDefault();
+        let taskId = event.target.getAttribute('task-id');
 
-        if (typeof taskId !== "undefined") {
-            let task = Tasks.findOne(taskId);
-            return task;
-        }
+        Session.set('selectedTaskId', taskId);
+
+        $('#setTimeTaskForm').modal('show');
     },
 
 });
 
 
-Template.updateTaskFormWrapper.events({
+// ==== task =============================================================================
+
+Template.task.helpers({
+    car() {
+        return Cars.findOne(this.carId);
+    },
+
+    // Border color for preview color circle
+    darkenColor(){
+        let currentCar = Cars.findOne(this.carId);
+        let currentColor = currentCar.color.colorCode;
+
+        // Change color
+        function shadeColor1(color, percent) {
+            var num = parseInt(color.slice(1), 16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+
+        // Minus - dark, Plus - light
+        return shadeColor1(currentColor, -10);
+    },
+
+    location() {
+        return Locations.findOne(this.locationId);
+    },
+
+    setTimeButtonClass(){
+        console.log(this.executorTime);
+        if (this.executorTime) {
+            return "btn-primary"
+        }
+        return "btn-outline-primary"
+
+    },
+});
+
+// ==== insertTaskForm =============================================================================
+
+Template.insertTaskForm.rendered = function () {
+    // $(".select2").select2({
+    //     // theme: "classic"
+    // });
+};
+
+// ==== updateTaskForm =============================================================================
+
+Template.updateTaskForm.events({
     // Modal
     'click .submit': function (e) {
+        console.log('upd');
         $('#updateTaskFormWrapper').modal('hide');
     },
 
@@ -86,3 +105,44 @@ Template.updateTaskFormWrapper.events({
         }
     }
 });
+
+Template.updateTaskForm.rendered = function () {
+    // $(".select2").select2({
+    //     // theme: "classic"
+    // });
+};
+
+Template.updateTaskForm.helpers({
+    currentTask: function () {
+        let taskId = Session.get('selectedTaskId');
+
+        if (typeof taskId !== "undefined") {
+            let task = Tasks.findOne(taskId);
+            return task;
+        }
+    },
+});
+
+
+Template.setTimeTaskForm.helpers({
+    currentTask: function () {
+        let taskId = Session.get('selectedTaskId');
+
+        if (typeof taskId !== "undefined") {
+            let task = Tasks.findOne(taskId);
+            return task;
+        }
+    },
+});
+
+Template.setTimeTaskForm.events({
+    // Modal
+    'click .submit': function (e) {
+        $('#setTimeTaskForm').modal('hide');
+    },
+});
+
+// Tasks.before.insert(function (userId, doc) {
+//     doc.createdAt = Date.now();
+// });
+

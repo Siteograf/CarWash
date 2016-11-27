@@ -11,21 +11,12 @@
     </table>
 
     {{> updateTaskFormWrapper}}
+    {{> setTimeTaskForm}}
 
 </template>
 
 
 <template name="insertTaskForm">
-    {{> quickForm
-    collection="Tasks"
-    id="insertTaskForm"
-    type="insert"
-    template="bootstrap3-horizontal"
-    class="form-inline"
-    }}
-
-
-    <hr>
     {{#autoForm collection="Tasks" id="insertTaskForm" type="insert" class="row"}}
         <div class="col-md-2">
             {{> afFieldInput name='taskName'}}
@@ -39,35 +30,45 @@
         <div class="col-md-2">
             {{> afFieldInput name='startDate'}}
         </div>
-        <div class="col-md-1">
-            <button type="submit" class="btn btn-primary">Insert</button>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary btn-block">Insert</button>
         </div>
     {{/autoForm}}
 </template>
 
 
 <template name="updateTaskForm">
-    {{> quickForm collection="Tasks"
-    id="updateTaskForm"
-    doc=currentTask
-    type="update"
-    }}
 
-    {{#autoForm collection="Tasks" id="insertTaskForm" type="insert" class="row"}}
-        <div class="col-md-2">
-            {{> afFieldInput name='taskName'}}
-        </div>
-        <div class="col-md-3">
-            {{> afFieldInput name='carId'}}
-        </div>
-        <div class="col-md-3">
-            {{> afFieldInput name='locationId'}}
-        </div>
-        <div class="col-md-2">
-            {{> afFieldInput name='startDate'}}
-        </div>
-        <div class="col-md-1">
-            <button type="submit" class="btn btn-primary">Insert</button>
+    {{currentTask._id}}
+    {{#autoForm collection="Tasks" id="updateTaskForm" doc=currentTask type="update" class="row"}}
+        <div class="container">
+
+            <div class="form-group">
+                {{> afFieldInput name='taskName'}}
+            </div>
+
+            <div class="form-group">
+                {{> afFieldInput name='carId'}}
+            </div>
+
+            <div class="form-group">
+                {{> afFieldInput name='locationId'}}
+            </div>
+
+
+            <div class="form-group">Start date
+                {{> afFieldInput name='startDate'}}
+            </div>
+
+            <hr>
+            <div class="form-group">
+                {{> afFormGroup name="executorTime" }}
+
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="submit btn btn-primary btn-block">Update</button>
+            </div>
         </div>
     {{/autoForm}}
 </template>
@@ -81,7 +82,7 @@
         <td>{{formatDate startDate}}</td>
         <td>{{taskName}}</td>
         <td>
-            <div class="colorPrew" style="background-color:{{car.color.colorCode}}"></div>
+            <div class="colorPrew" style="background-color:{{car.color.colorCode}}; border: 1px solid {{darkenColor}}"></div>
             {{car.make}} {{car.model}} {{car.plate}}
         </td>
 
@@ -93,7 +94,7 @@
         </td>
 
         <td>
-            <span class="btn btn-outline-primary">Time</span>
+            <span task-id="{{_id}}" class="{{ setTimeButtonClass }} setTime btn">Time</span>
         </td>
 
         <td>
@@ -116,6 +117,43 @@
                 </div>
                 <div class="modal-body">
                     {{> updateTaskForm }}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template name="setTimeTaskForm">
+    <div class="modal fade" id="setTimeTaskForm">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Task {{task._id}}</h4>
+                </div>
+                <div class="modal-body">
+
+                    {{currentTask._id}}
+                    {{#autoForm collection="Tasks" id="updateTaskForm" doc=currentTask type="update" class="row"}}
+                        <div class="container">
+
+                            <div class="form-group">
+                                Select your time
+                                {{> afFieldInput name="executorTime" }}
+                            </div>
+
+                            <div class="form-group">
+                                {{> afFieldInput name="message" placeholder="Or write range"}}
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="submit btn btn-primary btn-block">Update</button>
+                            </div>
+                        </div>
+                    {{/autoForm}}
                 </div>
             </div>
         </div>
