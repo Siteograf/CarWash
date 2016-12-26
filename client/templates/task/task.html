@@ -55,7 +55,6 @@
                 {{> afFieldInput name='locationId'}}
             </div>
 
-
             <div class="form-group">Start date
                 {{> afFieldInput name='startDate'}}
             </div>
@@ -63,7 +62,6 @@
             <hr>
             <div class="form-group">
                 {{> afFormGroup name="executorTime" }}
-
             </div>
 
             <div class="form-group">
@@ -81,6 +79,7 @@
 
         <td>{{formatDate startDate}}</td>
         <td>{{taskName}}</td>
+        <td>{{ownerId}}</td>
         <td>
             <div class="colorPrew" style="background-color:{{car.color.colorCode}}; border: 1px solid {{darkenColor}}"></div>
             {{car.make}} {{car.model}} {{car.plate}}
@@ -94,7 +93,12 @@
         </td>
 
         <td>
-            <span task-id="{{_id}}" class="{{ setTimeButtonClass }} setTime btn">Time</span>
+            <div class="btn-group" data-toggle="buttons">
+                <span task-id="{{_id}}" class="{{ setTimeButtonClass }} setTime btn">Time</span>
+                {{#if executorTime}}
+                    <span task-id="{{_id}}" class="{{ approveButtonClass }} approve btn">Approve</span>
+                {{/if}}
+            </div>
         </td>
 
         <td>
@@ -149,13 +153,40 @@
                                 {{> afFieldInput name="message" placeholder="Or write range"}}
                             </div>
 
+
                             <div class="form-group">
                                 <button type="submit" class="submit btn btn-primary btn-block">Update</button>
                             </div>
+                            {{currentTask.executorTime}}
+                            {{#if currentTask.executorTime}}
+                                <span task-id="{{_id}}" class="{{ approveButtonClass }} approve btn">Approve</span>
+                            {{/if}}
                         </div>
                     {{/autoForm}}
                 </div>
             </div>
         </div>
     </div>
+</template>
+
+
+<template name="taskInfo">
+    <table>
+        <tr>
+            <td>{{formatDate currentTask.tartDate}}</td>
+            <td>{{currentTask.taskName}}</td>
+            <td>{{currentTask.ownerId}}</td>
+            <td>
+                <div class="colorPrew" style="background-color:{{car.color.colorCode}};"></div>
+                {{car.make}} {{car.model}} {{car.plate}}
+            </td>
+
+            <td>
+                {{location.locationName}},
+                {{location.locationZip}},
+                {{location.locationAddress}}
+                {{location.locationComment}}
+            </td>
+        </tr>
+    </table>
 </template>

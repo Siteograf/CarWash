@@ -3,7 +3,7 @@ Meteor.subscribe('tasks');
 // ==== taskList =============================================================================
 Template.taskList.helpers({
     tasks() {
-        return Tasks.find({}, {sort: {/*createdAt: -1*/}});
+        return Tasks.find({}, {sort: {createdAt: -1}});
     },
 
     // tasks() {
@@ -69,13 +69,19 @@ Template.task.helpers({
     },
 
     setTimeButtonClass(){
-        console.log(this.executorTime);
         if (this.executorTime) {
-            return "btn-primary"
+            return "btn-primary";
         }
-        return "btn-outline-primary"
-
+        return "btn-outline-primary";
     },
+
+    approveButtonClass(){
+        if (this.executorTime) {
+            return "btn btn-outline-success";
+        }
+        return "btn btn-outline-secondary disabled";
+    },
+
 });
 
 // ==== insertTaskForm =============================================================================
@@ -133,16 +139,60 @@ Template.setTimeTaskForm.helpers({
             return task;
         }
     },
+
+    approveButtonClass(){
+        if (this.executorTime) {
+            return "btn btn-outline-success";
+        }
+        return "btn btn-outline-secondary disabled";
+    },
+
 });
 
 Template.setTimeTaskForm.events({
     // Modal
     'click .submit': function (e) {
-        $('#setTimeTaskForm').modal('hide');
+        // $('#setTimeTaskForm').modal('hide');
     },
 });
 
-// Tasks.before.insert(function (userId, doc) {
-//     doc.createdAt = Date.now();
-// });
+Tasks.before.insert(function (userId, doc) {
+    doc.createdAt = Date.now();
+    doc.ownerId = Meteor.userId();
+});
 
+Tasks.before.update(function (userId, doc, fieldNames, modifier, options) {
+    modifier.$set = modifier.$set || {};
+    modifier.$set.updatedAt = Date.now();
+});
+
+
+/*
+ Template.taskInfo.helpers({
+
+ currentTask: function () {
+ let taskId = Session.get('selectedTaskId');
+ if (typeof taskId !== "undefined") {
+ let task = Tasks.findOne(taskId);
+ return task;
+ }
+ },
+
+ car() {
+ let taskId = Session.get('selectedTaskId');
+ if (typeof taskId !== "undefined") {
+ let task = Tasks.findOne(taskId);
+ return Cars.findOne(task.carId);
+ }
+ },
+
+ location() {
+ let taskId = Session.get('selectedTaskId');
+ if (typeof taskId !== "undefined") {
+ let task = Tasks.findOne(taskId);
+ return Locations.findOne(task.locationId);
+ }
+
+ },
+
+ });*/
