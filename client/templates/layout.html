@@ -4,6 +4,8 @@
 
         {{> yield}}
 
-        {{> bottomNav}}
+        {{#if isInRole 'client'}}
+            {{> bottomNav}}
+        {{/if}}
     </div><!-- /.container -->
 </template>
