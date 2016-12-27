@@ -30,3 +30,25 @@
         </div>
     </nav>
 </template>
+
+<template name="bottomNav">
+    <nav class="navbar-full navbar-fixed-bottom navbar-light bg-faded">
+        <div class="row bottomNav">
+            <a class="item col-xs-4 text-xs-center {{#if isActiveRoute 'taskList'}}active{{/if}}" href="{{pathFor 'taskList'}}">
+                <img src="/icons/menu.svg" width="30px"><br/>
+                Tasks
+            </a>
+
+            <a class="item col-xs-4 text-xs-center {{#if isActiveRoute 'carList'}}active{{/if}}" href="{{pathFor 'carList'}}">
+                <img src="/icons/toy-car-outline.svg" width="30px"><br/>
+                Cars
+            </a>
+            <a class="item col-xs-4 text-xs-center {{#if isActiveRoute 'locationList'}}active{{/if}}" href="{{pathFor 'locationList'}}">
+                <img src="/icons/locations.svg" width="30px"><br/>
+                Locations
+            </a>
+        </div>
+    </nav>
+
+
+</template>
