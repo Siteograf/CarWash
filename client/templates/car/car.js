@@ -1,5 +1,6 @@
 Meteor.subscribe('cars');
 
+
 Template.carList.helpers({
     cars() {
         return Cars.find({}, {sort: {createdAt: -1}});
@@ -35,6 +36,7 @@ AutoForm.hooks({
     insertCarForm: {
         before: {
             insert: function (doc) {
+                //let userId = Meteor._userId;
                 let colorId = AutoForm.getFieldValue('color', 'insertCarForm').colorId;
                 let color = Colors.findOne(colorId);
                 doc.color.colorName = color.colorName;

@@ -31,8 +31,9 @@ Meteor.publish("users", function () {
 });
 
 Meteor.publish("cars", function () {
-    return Cars.find();
+    return Cars.find({userId: this.userId});
 });
+
 Meteor.publish("locations", function () {
     return Locations.find();
 });
