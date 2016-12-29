@@ -31,8 +31,19 @@ Meteor.publish("users", function () {
 });
 
 Meteor.publish("cars", function () {
-    return Cars.find({userId: this.userId});
+    if (Roles.userIsInRole(this.userId, 'manager')) {
+        return Cars.find();
+    } else if (Roles.userIsInRole(this.userId, 'client')) {
+        return Cars.find({
+            userId: this.userId
+        }, {
+            fields: {
+                userId: false
+            }
+        });
+    }
 });
+
 
 Meteor.publish("locations", function () {
     return Locations.find();

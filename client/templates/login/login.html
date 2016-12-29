@@ -1,0 +1,27 @@
+<template name="login">
+    <h1>Login</h1>
+
+    {{#if currentUser}}
+        <p>You're logged in.</p>
+    {{else}}
+        {{> loginButtons}}
+    {{/if}}
+
+</template>
+
+
+<template name="registerForm">
+    <form>
+        <input type="email" name="registerEmail">
+        <input type="password" name="registerPassword">
+        <input type="submit" value="Register">
+    </form>
+</template>
+
+<template name="loginForm">
+    <form>
+        <input type="email" name="loginEmail">
+        <input type="password" name="loginPassword">
+        <input type="submit" value="Login">
+    </form>
+</template>
